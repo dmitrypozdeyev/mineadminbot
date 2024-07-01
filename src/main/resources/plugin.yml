@@ -1,0 +1,4 @@
+name: mineadminbot
+version: '${project.version}'
+main: org.abbafan.mineadminbot.Mineadminbot
+api-version: '1.18'
