@@ -1,5 +1,6 @@
 package org.abbafan.mineadminbot.bot;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -45,6 +46,9 @@ public class TBot extends TelegramLongPollingBot {
         else {
             System.out.println("Config error, chenge token and chatId in minebot.yml");
         }
+        for (File file : new File("plugins/mineadminbot/users").listFiles()) {
+            mode.put(file.getName().replace(".yml", ""), "none");
+        }
     }
 
     @Override
@@ -59,19 +63,14 @@ public class TBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        if (update.getMessage().getText().equals("/start")){
-            if (BotTools.registeruser(update.getMessage())){
-                SendMessage sendMessage = new SendMessage();
-                sendMessage.setChatId(update.getMessage().getChatId());
-                sendMessage.setText("Вы зарегистрированы");
-                try {
-                    execute(sendMessage);
-                } catch (Exception e) {
-                    System.out.println("Error while sending message: " + e);
-                }
+        if (update.getMessage().getText().startsWith("/")){
+            if (update.getMessage().getText().equals("/start")) {
+                BotTools.registeruser(update.getMessage());
             }
         }
-
+        else {
+            BotTools.addCommand(update.getMessage().getChatId(), update.getMessage().getText());
+        }
 
     }
 }
