@@ -2,3 +2,9 @@ name: mineadminbot
 version: '${project.version}'
 main: org.abbafan.mineadminbot.Mineadminbot
 api-version: '1.18'
+
+commands:
+  report:
+    description: 'Отправить жалобу на игрока'
+    usage: '/report <player> <reason>'
+    aliases: ['r']

@@ -1,0 +1,6 @@
+org/abbafan/mineadminbot/Mineadminbot.class
+org/abbafan/mineadminbot/bot/Admin.class
+org/abbafan/mineadminbot/bot/TBot.class
+org/abbafan/mineadminbot/commands/ReportCMD.class
+org/abbafan/mineadminbot/bot/BotTools.class
+org/abbafan/mineadminbot/bot/Handler.class

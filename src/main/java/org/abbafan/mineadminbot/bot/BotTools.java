@@ -9,10 +9,12 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
+
+import static org.abbafan.mineadminbot.bot.Admin.getAdmin;
 
 public class BotTools {
     public  static TBot bot = null;
-    public static ArrayList<String> commandQueue = new ArrayList<>();
 
     public static void runbot(){
         bot = new TBot();
@@ -37,6 +39,7 @@ public class BotTools {
                 user.set("firstname", message.getChat().getFirstName());
                 user.set("lastname", message.getChat().getLastName());
                 user.save(userFile);
+                BotTools.sendMessage(message.getChatId().toString(), "Вы зарегистрированы!");
                 return true;
             } catch (Exception e) {
                 System.out.println("Error while creating user file: " + e);
@@ -69,10 +72,26 @@ public class BotTools {
 
     public static void addCommand(Long chatid, String command){
         if (isAdmin(chatid)){
-            commandQueue.add(command);
+            Handler.commandQueue.add(command);
             sendMessage(chatid.toString(), "Комманда " + command + " выполнена");
         }
         else sendMessage(chatid.toString(), "Недостаточно прав");
+    }
+
+    public static List<Admin> getAdmins(){
+        List<Admin> admins = new ArrayList<>();
+        YamlConfiguration admin = new YamlConfiguration();
+        for (File file : new File("plugins/mineadminbot/users").listFiles()) {
+            try {
+                admin.load(file);
+                if (admin.getBoolean("admin")) {
+                    admins.add(getAdmin(admin.getLong("userid")));
+                }
+            } catch (Exception e) {
+                System.out.println("Error while loading user file: " + e);
+            }
+        }
+        return admins;
     }
 
 

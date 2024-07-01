@@ -46,9 +46,7 @@ public class TBot extends TelegramLongPollingBot {
         else {
             System.out.println("Config error, chenge token and chatId in minebot.yml");
         }
-        for (File file : new File("plugins/mineadminbot/users").listFiles()) {
-            mode.put(file.getName().replace(".yml", ""), "none");
-        }
+
     }
 
     @Override
@@ -63,13 +61,21 @@ public class TBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        if (update.getMessage().getText().startsWith("/")){
-            if (update.getMessage().getText().equals("/start")) {
-                BotTools.registeruser(update.getMessage());
-            }
+        if (update.hasCallbackQuery()) {
+           if (update.getCallbackQuery().getData().toString().startsWith("ban")){
+               String playername = update.getCallbackQuery().getData().toString().replace("ban", "");
+               Admin admin = Admin.getAdmin(update.getCallbackQuery().getMessage().getChatId());
+               admin.banPlayer(playername);
+           }
         }
-        else {
-            BotTools.addCommand(update.getMessage().getChatId(), update.getMessage().getText());
+        if (update.hasMessage()) {
+            if (update.getMessage().getText().startsWith("/")) {
+                if (update.getMessage().getText().equals("/start")) {
+                    BotTools.registeruser(update.getMessage());
+                }
+            } else {
+                BotTools.addCommand(update.getMessage().getChatId(), update.getMessage().getText());
+            }
         }
 
     }
