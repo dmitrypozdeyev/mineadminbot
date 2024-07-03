@@ -2,5 +2,6 @@
 /Users/dmitrijpozdeev/IdeaProjects/mineadminbot/src/main/java/org/abbafan/mineadminbot/bot/Admin.java
 /Users/dmitrijpozdeev/IdeaProjects/mineadminbot/src/main/java/org/abbafan/mineadminbot/Mineadminbot.java
 /Users/dmitrijpozdeev/IdeaProjects/mineadminbot/src/main/java/org/abbafan/mineadminbot/bot/BotTools.java
+/Users/dmitrijpozdeev/IdeaProjects/mineadminbot/src/main/java/org/abbafan/mineadminbot/bot/Handler.java
 /Users/dmitrijpozdeev/IdeaProjects/mineadminbot/src/main/java/org/abbafan/mineadminbot/commands/ReportCMD.java
-/Users/dmitrijpozdeev/IdeaProjects/mineadminbot/src/main/java/org/abbafan/mineadminbot/bot/ExecCommand.java
+/Users/dmitrijpozdeev/IdeaProjects/mineadminbot/src/main/java/org/abbafan/mineadminbot/events/Mute.java

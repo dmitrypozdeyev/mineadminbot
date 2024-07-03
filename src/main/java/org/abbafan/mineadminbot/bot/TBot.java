@@ -1,5 +1,6 @@
 package org.abbafan.mineadminbot.bot;
 
+import org.abbafan.mineadminbot.Mineadminbot;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -67,11 +68,58 @@ public class TBot extends TelegramLongPollingBot {
                Admin admin = Admin.getAdmin(update.getCallbackQuery().getMessage().getChatId());
                admin.banPlayer(playername);
            }
+           if (update.getCallbackQuery().getData().toString().startsWith("kick")){
+               String playername = update.getCallbackQuery().getData().toString().replace("kick", "");
+               Admin admin = Admin.getAdmin(update.getCallbackQuery().getMessage().getChatId());
+               admin.kickPlayer(playername);
+           }
+           if (update.getCallbackQuery().getData().toString().startsWith("mute")){
+               String playername = update.getCallbackQuery().getData().toString().replace("mute", "");
+               Admin admin = Admin.getAdmin(update.getCallbackQuery().getMessage().getChatId());
+               admin.mutePlayer(playername);
+           }
+           if (update.getCallbackQuery().getData().toString().startsWith("unm")){
+               String playername = update.getCallbackQuery().getData().toString().replace("unm", "");
+               Mineadminbot.mute.unmutePlayer(playername);
+               BotTools.sendMessage(update.getCallbackQuery().getMessage().getChatId().toString(), "Игрок " + playername + " размьючен!");
+           }
+           if (update.getCallbackQuery().getData().toString().startsWith("unb")){
+               String playername = update.getCallbackQuery().getData().toString().replace("unb", "");
+               Admin admin = Admin.getAdmin(update.getCallbackQuery().getMessage().getChatId());
+               admin.unbanPlayer(playername);
+               BotTools.sendMessage(update.getCallbackQuery().getMessage().getChatId().toString(), "Игрок " + playername + " разбанен!");
+           }
+
         }
         if (update.hasMessage()) {
             if (update.getMessage().getText().startsWith("/")) {
                 if (update.getMessage().getText().equals("/start")) {
                     BotTools.registeruser(update.getMessage());
+                }
+                if (update.getMessage().getText().equals("/mute")){
+                    Admin admin = Admin.getAdmin(update.getMessage().getChatId());
+                    if (admin!=null) admin.mutePlayerMessage();
+                    else BotTools.sendMessage(update.getMessage().getChatId().toString(), "У вас не достаточно прав!");
+                }
+                if (update.getMessage().getText().equals("/unmute")){
+                    Admin admin = Admin.getAdmin(update.getMessage().getChatId());
+                    if (admin!=null) admin.unmutePlayerMessage();
+                    else BotTools.sendMessage(update.getMessage().getChatId().toString(), "У вас не достаточно прав!");
+                }
+                if (update.getMessage().getText().equals("/ban")){
+                    Admin admin = Admin.getAdmin(update.getMessage().getChatId());
+                    if (admin!=null) admin.banPlayerMessage();
+                    else BotTools.sendMessage(update.getMessage().getChatId().toString(), "У вас не достаточно прав!");
+                }
+                if (update.getMessage().getText().equals("/unban")){
+                    Admin admin = Admin.getAdmin(update.getMessage().getChatId());
+                    if (admin!=null) admin.unbanPlayerMessage();
+                    else BotTools.sendMessage(update.getMessage().getChatId().toString(), "У вас не достаточно прав!");
+                }
+                if (update.getMessage().getText().equals("/kick")){
+                    Admin admin = Admin.getAdmin(update.getMessage().getChatId());
+                    if (admin!=null) admin.kickPlayerMessage();
+                    else BotTools.sendMessage(update.getMessage().getChatId().toString(), "У вас не достаточно прав!");
                 }
             } else {
                 BotTools.addCommand(update.getMessage().getChatId(), update.getMessage().getText());
